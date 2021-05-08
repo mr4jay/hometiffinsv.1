@@ -16,13 +16,8 @@ from datetime import datetime
 class CreateProducts(generics.CreateAPIView):
     
     serializer_class = ProductSerializer
-
-    def get(self,request,format=None):
-        queryset = FoodProducts.objects.all().values()
-        return Response (queryset)
-
     def post(self, request, format=None):
-        serializer = ProductSerializer(data=request.data,many = True)
+        serializer = ProductSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({"message": "Success"}, status=status.HTTP_201_CREATED)
